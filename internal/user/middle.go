@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"log/slog"
 	"net/http"
 	"strings"
 
@@ -19,6 +20,7 @@ func MakeMiddlewareAuth(jwt *jwt.Jwt, loginService *LoginService, next func(w ht
 
 		id, err := jwt.GetID(part[1])
 		if err != nil {
+			slog.Error("jwt get id err", slog.String("err", err.Error()))
 			return
 		}
 

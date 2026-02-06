@@ -3,6 +3,7 @@ package user
 import (
 	"encoding/json"
 	"io"
+	"log/slog"
 	"net/http"
 
 	"board/pkg/jwt"
@@ -26,6 +27,7 @@ func MakeLoginHandler(jwt *jwt.Jwt, loginService *LoginService) func(w http.Resp
 
 		s, err := loginService.Login(l.Login, l.Password)
 		if err != nil {
+			slog.Error("error login", slog.String("error", err.Error()))
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}

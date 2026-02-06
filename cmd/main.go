@@ -18,10 +18,6 @@ func main() {
 		secret = os.Args[1]
 	}
 
-	srv.AddHandler(http.MethodGet, "/", func(writer http.ResponseWriter, request *http.Request) {
-		writer.Write([]byte("hello world"))
-	})
-
 	userRep := user.NewRepository()
 
 	regService := user.NewRegistration(userRep)
@@ -35,6 +31,8 @@ func main() {
 	srv.AddHandler(http.MethodPost, "/", user.MakeMiddlewareAuth(j, loginService,
 		board.CreateAnnouncementHandler(b),
 	))
+
+	srv.AddHandler(http.MethodGet, "/", board.ListHandler(b))
 
 	srv.AddHandler(http.MethodPost, "/reg", user.MakeRegHandler(regService))
 

@@ -1,4 +1,5 @@
 GET localhost:8080/
+
 ###
 
 POST localhost:8080/reg
@@ -21,4 +22,22 @@ Content-Type: application/json
   "login": "User1",
   "password": "Password"
 }
+
+###
+
+
+#
+
+POST localhost:8080/
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjExZjdiNjVhLTA2MGUtNDQ3Ny05ZGQ1LTgxYzU4NTVjMjZkYSJ9.yNVTEPPqvxX3vxzIxx3CL4Ybxh6v9dsU3NGy2IIvuPUAVxm_h3sEZmqFrvmB6nY-JE9-cp6xeHD3K3ZP99_0Tg
+Content-Type: application/json
+
+{
+  "text": "Текст объявления"
+}
+
+###
+
+GET localhost:8080
+
 ###

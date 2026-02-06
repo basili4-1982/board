@@ -18,16 +18,16 @@ func NewJwt(secret string) *Jwt {
 
 func (j Jwt) SigningString(id uuid.UUID) (string, error) {
 
-	t := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+	t := jwt.NewWithClaims(jwt.SigningMethodHS512, jwt.MapClaims{
 		"id": id,
 	})
 
-	return t.SignedString(j.secret)
+	return t.SignedString([]byte(j.secret))
 }
 
 func (j Jwt) GetID(tokenStr string) (string, error) {
 	t, err := jwt.Parse(tokenStr, func(token *jwt.Token) (any, error) {
-		return j.secret, nil
+		return []byte(j.secret), nil
 	})
 
 	if err != nil {

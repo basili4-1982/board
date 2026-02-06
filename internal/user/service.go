@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"log/slog"
 
 	"board/pkg/jwt"
 	"board/pkg/utils"
@@ -31,6 +32,8 @@ func (l *LoginService) Login(nickname, password string) (string, error) {
 
 	signingString, err := l.jwt.SigningString(user.ID)
 	if err != nil {
+		slog.Error("error ctrl", slog.String("error", err.Error()))
+
 		return "", fmt.Errorf("jwt signing error")
 	}
 
