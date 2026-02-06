@@ -30,6 +30,9 @@ func MakeLoginHandler(jwt *jwt.Jwt, loginService *LoginService) func(w http.Resp
 			return
 		}
 
-		w.Write([]byte(s))
+		_, err = w.Write([]byte(s))
+		if err != nil {
+			return
+		}
 	}
 }

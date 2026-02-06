@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 
+	"board/internal/board"
 	"board/internal/server"
 	"board/internal/user"
 	"board/pkg/jwt"
@@ -29,11 +30,15 @@ func main() {
 
 	loginService := user.NewLoginService(userRep, j)
 
+	b := board.NewBoard(board.NewRepository())
+
+	srv.AddHandler(http.MethodPost, "/", user.MakeMiddlewareAuth(j, loginService,
+		board.CreateAnnouncementHandler(b),
+	))
+
 	srv.AddHandler(http.MethodPost, "/reg", user.MakeRegHandler(regService))
 
 	srv.AddHandler(http.MethodPost, "/login", user.MakeLoginHandler(j, loginService))
-
-	srv.AddHandler(http.MethodPost, "/", user.MakeLoginHandler(j, loginService))
 
 	err := srv.Run(":8080")
 	if err != nil {

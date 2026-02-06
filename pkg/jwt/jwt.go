@@ -22,7 +22,7 @@ func (j Jwt) SigningString(id uuid.UUID) (string, error) {
 		"id": id,
 	})
 
-	return t.SigningString()
+	return t.SignedString(j.secret)
 }
 
 func (j Jwt) GetID(tokenStr string) (string, error) {
